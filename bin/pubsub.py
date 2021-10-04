@@ -6,7 +6,7 @@ redis_client = redis.from_url(url=os.getenv('PUBSUB_URL'), db=0)
 class Publisher:
     io: Emitter
     def __init__(self):
-        self.io = Emitter({'client': redis_client}) #({'url': os.getenv('PUBSUB_URL')})
+        self.io = Emitter({'client': redis_client})
     
     def emit(self, event:str, payload: dict):
         self.io.Emit(event, json.dumps(payload))
