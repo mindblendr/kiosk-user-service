@@ -1,10 +1,8 @@
-import time
+from fastapi.params import Body
 from models.user import User
 from pydantic import BaseModel
 from fastapi import APIRouter
-import bcrypt
-import jwt
-import os
+import bcrypt, time, jwt, os
 from bin.session_cache import session_cache
 
 
@@ -19,7 +17,7 @@ router = APIRouter()
 
 
 @router.post(path="/login")
-async def login(request: LoginSchema):
+async def login(request: LoginSchema = Body(...)):
     user = await User.filter(username=request.username, status=1).get_or_none()
     if user is not None:
         if bcrypt.checkpw(request.password.encode('utf-8'), user.password.encode('utf-8')):
@@ -36,8 +34,7 @@ async def login(request: LoginSchema):
 
             return {
                 'data': {
-                    'token': token,
-                    'session': session_cache.get(session_cache_key)
+                    'token': token
                 },
                 'status': 1
             }
