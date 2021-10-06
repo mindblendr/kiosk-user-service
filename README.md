@@ -29,5 +29,5 @@ python main.py
 In order to test locally, you need 2 redis servers. 1 for session caching, and another for the pubsub
 
 ```bash
-docker run --name <REDIS_SERVER_NAME> -port <PUBLIC_PORT>:6379 -d redis
+docker run --name <REDIS_SERVER_NAME> -p <PUBLIC_PORT>:6379 -d redis
 ```
